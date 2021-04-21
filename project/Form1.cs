@@ -53,9 +53,58 @@ namespace project
             
 
         }
+        public int area(Point a,Point b,Point c)
+        {
+            return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
+        }
+        public bool intersect_1(int a, int b, int c, int d)
+        {
+            if (a > b)
+            {
+                var temp = a;
+                a = b;
+                b = temp;
+                
+            }
+
+            if (c > d) 
+            {
+                var temp2 = c;
+                c = d;
+                d = temp2;
+            }
+            return Math.Max(a, c) <= Math.Min(b, d);
+        }
+        public bool intersect_check(Point a, Point b, Point c, Point d)
+        {
+            return intersect_1(a.X, b.X, c.X, d.X)
+                   && intersect_1(a.Y, b.Y, c.Y, d.Y)
+                   && area(a, b, c) * area(a, b, d) <= 0
+                   && area(c, d, a) * area(c, d, b) <= 0;
+        }
+        public void checkAndSwap(Point[] points)
+        {
+            if (intersect_check(points[0], points[1], points[2], points[3]))
+            {
+
+                var buffer = points[1];
+                points[1] = points[3];
+                points[3] = buffer;
+            } 
+            if(intersect_check(points[0], points[3], points[1], points[2]))
+            {
+
+                var buffer = points[2];
+                points[2] = points[3];
+                points[3] = buffer;
+            }
+
+        }
         public void drawPoligon(Point[] points)
         {
-            
+            Console.WriteLine( intersect_check(points[0], points[1], points[2], points[3]));
+            Console.WriteLine(intersect_check(points[0], points[3], points[1], points[2]));
+            checkAndSwap(points);
             g.DrawPolygon(p, points);
             Array.Clear(points, 0, 4);
             k = 0;
