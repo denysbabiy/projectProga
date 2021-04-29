@@ -29,11 +29,18 @@ namespace project
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.toolTipClearButton = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelPerimetr = new System.Windows.Forms.Label();
+            this.labelSquare = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -71,6 +78,11 @@ namespace project
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.labelSquare);
+            this.splitContainer1.Panel2.Controls.Add(this.label3);
+            this.splitContainer1.Panel2.Controls.Add(this.labelPerimetr);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.clearButton);
             this.splitContainer1.Panel2.Controls.Add(this.listBox1);
             this.splitContainer1.Size = new System.Drawing.Size(1062, 550);
             this.splitContainer1.SplitterDistance = 852;
@@ -100,6 +112,52 @@ namespace project
             this.listBox1.Size = new System.Drawing.Size(206, 164);
             this.listBox1.TabIndex = 0;
             // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(40, 493);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(134, 54);
+            this.clearButton.TabIndex = 3;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 184);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 20);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Perimetr:";
+            // 
+            // labelPerimetr
+            // 
+            this.labelPerimetr.AutoSize = true;
+            this.labelPerimetr.Location = new System.Drawing.Point(17, 208);
+            this.labelPerimetr.Name = "labelPerimetr";
+            this.labelPerimetr.Size = new System.Drawing.Size(32, 20);
+            this.labelPerimetr.TabIndex = 5;
+            this.labelPerimetr.Text = "per";
+            // 
+            // labelSquare
+            // 
+            this.labelSquare.AutoSize = true;
+            this.labelSquare.Location = new System.Drawing.Point(21, 277);
+            this.labelSquare.Name = "labelSquare";
+            this.labelSquare.Size = new System.Drawing.Size(35, 20);
+            this.labelSquare.TabIndex = 7;
+            this.labelSquare.Text = "squ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 253);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 20);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Square:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -115,6 +173,7 @@ namespace project
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -129,6 +188,12 @@ namespace project
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.ToolTip toolTipClearButton;
+        private System.Windows.Forms.Label labelPerimetr;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelSquare;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -42,6 +42,7 @@ namespace project
             
             drawGrid(numOfCells, cellSize);
             pictureBox1.Image = bmp;
+            toolTipClearButton.SetToolTip(this.clearButton, "Clear to continue drawing");
 
 
         }
@@ -63,10 +64,17 @@ namespace project
             points[k++] = new Point(cursor.X, cursor.Y);
             pictureBox1.Image = bmp;
             listBox1.Items.Add("X:" + cursor.X + " Y:" + cursor.Y);
+
             if (k == 4)
             {
+                perimetrfunc(points);
+                square(points);
                 drawPoligon(points);
+                pictureBox1.Enabled = false;
+                clearButton.BackColor = Color.Green;
+                
                 //pictureBox1.Image = bmp;
+                
             }
             
             
@@ -124,6 +132,7 @@ namespace project
             g = Graphics.FromImage(bmp);
             Console.WriteLine( intersect_check(points[0], points[1], points[2], points[3]));
             Console.WriteLine(intersect_check(points[0], points[3], points[1], points[2]));
+            
             checkAndSwap(points);
             g.DrawPolygon(p, points);
             pictureBox1.Image = bmp;
@@ -131,6 +140,33 @@ namespace project
             Array.Clear(points, 0, 4);
             k = 0;
             
+        }
+        public double sideLenght(Point a,Point b)
+        {
+            double len;
+            Point ab = new Point(b.X - a.X, b.Y - a.Y);
+            
+            len = Math.Sqrt(Math.Pow(ab.X, 2) + Math.Pow(ab.Y, 2));
+            
+            return len;
+        }
+        double perimetr;
+        public void perimetrfunc(Point[] points)
+        {
+            perimetr = sideLenght(points[0], points[1]) + sideLenght(points[1], points[2]) +
+                sideLenght(points[2], points[3]) + sideLenght(points[3], points[0]);
+            
+            labelPerimetr.Text = Convert.ToString(Math.Round(perimetr, 4))+ " pixels";
+            
+            
+        }
+        public void square(Point[] points)
+        {
+
+            double square = Math.Sqrt((perimetr / 2 - sideLenght(points[0], points[1]))*
+                (perimetr / 2 - sideLenght(points[1], points[2]))*(perimetr / 2 - sideLenght(points[2], points[3]))*
+                (perimetr / 2 - sideLenght(points[3], points[0])));
+            labelSquare.Text = Convert.ToString(Math.Round(square, 4)) + " pixels^2";
         }
         public void drawGrid(int numOfsels,int cellSize)
         {
@@ -144,7 +180,7 @@ namespace project
             {
                 g.DrawLine(gr, x * cellSize, 0, x * cellSize, numOfCells * cellSize);
             }
-            
+           
             
         }
 
@@ -155,14 +191,22 @@ namespace project
 
         }
 
-        
+        private void clearButton_Click(object sender, EventArgs e)
+        {
 
-        
+            g.Clear(Color.White);
+            drawGrid(numOfCells, cellSize);
+            pictureBox1.Image = bmp;
+            Array.Clear(points, 0, 4);
+            k = 0;
+            listBox1.Items.Clear();
+            labelPerimetr.Text = "";
+            labelSquare.Text = "";
+            pictureBox1.Enabled = true;
+            clearButton.BackColor = SystemColors.Control;
 
-        
 
-        
 
-        
+        }
     }
 }
