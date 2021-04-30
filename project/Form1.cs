@@ -67,17 +67,43 @@ namespace project
 
             if (k == 4)
             {
-                perimetrfunc(points);
-                square(points);
-                drawPoligon(points);
-                pictureBox1.Enabled = false;
-                clearButton.BackColor = Color.Green;
+                if (!threePointInOneLine(points)) 
+                {
+                    drawPoligon(points);
+                    pictureBox1.Enabled = false;
+                    clearButton.BackColor = Color.Green;
+                }
+                else
+                {
+                    Array.Clear(points, 0, 4);
+                    k = 0;
+                    MessageBox.Show("Three or more points lie on one line,\nTry again.", "Error!",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Error);
+                    FormClean();
+                    
+                }
                 
-                //pictureBox1.Image = bmp;
+                
+                
                 
             }
             
             
+
+        }
+        public bool threePointInOneLine(Point[] points)
+        {
+            int a = points[0].X * (points[1].Y - points[2].Y) + points[1].X * (points[2].Y - points[0].Y) + 
+                points[2].X * (points[0].Y - points[1].Y);
+            if (a == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
         public int area(Point a,Point b,Point c)
@@ -134,6 +160,9 @@ namespace project
             Console.WriteLine(intersect_check(points[0], points[3], points[1], points[2]));
             
             checkAndSwap(points);
+            perimetrfunc(points);
+            square(points);
+            findType(points);
             g.DrawPolygon(p, points);
             pictureBox1.Image = bmp;
             //Dispose();
@@ -168,6 +197,81 @@ namespace project
                 (perimetr / 2 - sideLenght(points[3], points[0])));
             labelSquare.Text = Convert.ToString(Math.Round(square, 4)) + " pixels^2";
         }
+        public PointF VEC(Point a,Point b)
+        {
+            Point ab = new Point(b.X - a.X, b.Y - a.Y);
+            return ab;
+        }
+        public double scalarProd(PointF a,PointF b)
+        {
+            double scal;
+            scal = a.X * b.X + a.Y * b.Y;
+
+            return scal;
+        }
+        public double modVec(PointF a)
+        {
+
+            return Math.Sqrt(Math.Pow(a.X, 2) + Math.Pow(a.Y, 2));
+        }
+        
+        public double findTangle(double scalProd,double modVec1,double modVec2)
+        {
+            double cosA = scalProd/modVec1*modVec2;
+            
+            return cosA;
+        }
+        public void findType(Point[] points)
+        {
+            if(sideLenght(points[0], points[1]) == sideLenght(points[1], points[2]) && 
+                sideLenght(points[1], points[2]) == sideLenght(points[2], points[3]) &&
+                sideLenght(points[2], points[3])== sideLenght(points[3], points[0]))
+            {
+                if(findTangle(scalarProd(VEC(points[1], points[0]), VEC(points[1], points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2])))==0)
+                {
+                    labelType.Text = "quadrate";
+                }
+                else
+                {
+                    labelType.Text = "rhombus";
+                }
+
+            }
+            else if(findTangle(scalarProd(VEC(points[1], points[0]), VEC(points[1], points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2]))) == 0)
+            {
+                labelType.Text = "rectangle";
+            }
+            else if(findTangle(scalarProd(VEC(points[1], points[0]), VEC(points[1], points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2]))) == 
+                findTangle(scalarProd(VEC(points[2], points[3]), VEC(points[0], points[3])),
+                modVec(VEC(points[2], points[3])), modVec(VEC(points[0], points[3]))))
+            {
+                labelType.Text = "parallelogram";
+            }
+            else if ((findTangle(scalarProd(VEC(points[0], points[1]), VEC(points[3], points[0])),
+                modVec(VEC(points[0], points[1])), modVec(VEC(points[3], points[0])))== 
+                findTangle(scalarProd(VEC(points[1], points[0]), VEC(points[1], points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2])))) || (
+                findTangle(scalarProd(VEC(points[1], points[0]), VEC(points[1], points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2]))))== 
+                findTangle(scalarProd(VEC(points[3], points[2]), VEC(points[2], points[1])),
+                modVec(VEC(points[3], points[2])), modVec(VEC(points[2], points[1]))))
+            {
+                labelType.Text = "trapezoid";
+            }
+            else
+            {
+                labelType.Text = "quadrangle";
+            }
+            
+            Console.WriteLine(findTangle(scalarProd(VEC(points[1],points[0]), VEC(points[1],points[2])),
+                modVec(VEC(points[1], points[0])), modVec(VEC(points[1], points[2]))));
+            Console.WriteLine(findTangle(scalarProd(VEC(points[3], points[0]), VEC(points[3], points[2])),
+                modVec(VEC(points[2], points[3])), modVec(VEC(points[0], points[3]))));
+
+        }
         public void drawGrid(int numOfsels,int cellSize)
         {
             
@@ -194,6 +298,11 @@ namespace project
         private void clearButton_Click(object sender, EventArgs e)
         {
 
+            FormClean();
+
+        }
+        public void FormClean()
+        {
             g.Clear(Color.White);
             drawGrid(numOfCells, cellSize);
             pictureBox1.Image = bmp;
@@ -202,11 +311,9 @@ namespace project
             listBox1.Items.Clear();
             labelPerimetr.Text = "";
             labelSquare.Text = "";
+            labelType.Text = "";
             pictureBox1.Enabled = true;
             clearButton.BackColor = SystemColors.Control;
-
-
-
         }
     }
 }

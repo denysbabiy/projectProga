@@ -34,13 +34,15 @@ namespace project
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.clearButton = new System.Windows.Forms.Button();
-            this.toolTipClearButton = new System.Windows.Forms.ToolTip(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.labelPerimetr = new System.Windows.Forms.Label();
             this.labelSquare = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelPerimetr = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.toolTipClearButton = new System.Windows.Forms.ToolTip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelType = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -78,6 +80,8 @@ namespace project
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.labelType);
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.labelSquare);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.labelPerimetr);
@@ -102,44 +106,6 @@ namespace project
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(206, 164);
-            this.listBox1.TabIndex = 0;
-            // 
-            // clearButton
-            // 
-            this.clearButton.Location = new System.Drawing.Point(40, 493);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(134, 54);
-            this.clearButton.TabIndex = 3;
-            this.clearButton.Text = "Clear";
-            this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 184);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Perimetr:";
-            // 
-            // labelPerimetr
-            // 
-            this.labelPerimetr.AutoSize = true;
-            this.labelPerimetr.Location = new System.Drawing.Point(17, 208);
-            this.labelPerimetr.Name = "labelPerimetr";
-            this.labelPerimetr.Size = new System.Drawing.Size(32, 20);
-            this.labelPerimetr.TabIndex = 5;
-            this.labelPerimetr.Text = "per";
-            // 
             // labelSquare
             // 
             this.labelSquare.AutoSize = true;
@@ -152,11 +118,67 @@ namespace project
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 253);
+            this.label3.Location = new System.Drawing.Point(13, 257);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Square:";
+            // 
+            // labelPerimetr
+            // 
+            this.labelPerimetr.AutoSize = true;
+            this.labelPerimetr.Location = new System.Drawing.Point(17, 208);
+            this.labelPerimetr.Name = "labelPerimetr";
+            this.labelPerimetr.Size = new System.Drawing.Size(32, 20);
+            this.labelPerimetr.TabIndex = 5;
+            this.labelPerimetr.Text = "per";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 184);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 20);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Perimetr:";
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(40, 493);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(134, 54);
+            this.clearButton.TabIndex = 3;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(0, 0);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(206, 164);
+            this.listBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 334);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Type:";
+            // 
+            // labelType
+            // 
+            this.labelType.AutoSize = true;
+            this.labelType.Location = new System.Drawing.Point(21, 366);
+            this.labelType.Name = "labelType";
+            this.labelType.Size = new System.Drawing.Size(30, 20);
+            this.labelType.TabIndex = 9;
+            this.labelType.Text = "typ";
             // 
             // Form1
             // 
@@ -194,6 +216,8 @@ namespace project
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelSquare;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelType;
+        private System.Windows.Forms.Label label1;
     }
 }
 
