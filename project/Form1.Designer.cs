@@ -34,6 +34,13 @@ namespace project
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buttonAdd = new System.Windows.Forms.Button();
+            this.textBoxY = new System.Windows.Forms.TextBox();
+            this.textBoxX = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelType = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.labelSquare = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.labelPerimetr = new System.Windows.Forms.Label();
@@ -41,8 +48,8 @@ namespace project
             this.clearButton = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolTipClearButton = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelType = new System.Windows.Forms.Label();
+            this.buttonSave = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -56,9 +63,9 @@ namespace project
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 550);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 639);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1062, 32);
+            this.statusStrip1.Size = new System.Drawing.Size(1139, 32);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -80,6 +87,12 @@ namespace project
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.buttonSave);
+            this.splitContainer1.Panel2.Controls.Add(this.buttonAdd);
+            this.splitContainer1.Panel2.Controls.Add(this.textBoxY);
+            this.splitContainer1.Panel2.Controls.Add(this.textBoxX);
+            this.splitContainer1.Panel2.Controls.Add(this.label5);
+            this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.labelType);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.labelSquare);
@@ -88,28 +101,90 @@ namespace project
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.clearButton);
             this.splitContainer1.Panel2.Controls.Add(this.listBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(1062, 550);
-            this.splitContainer1.SplitterDistance = 852;
+            this.splitContainer1.Size = new System.Drawing.Size(1139, 639);
+            this.splitContainer1.SplitterDistance = 912;
             this.splitContainer1.TabIndex = 2;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(854, 550);
+            this.pictureBox1.Size = new System.Drawing.Size(912, 639);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Location = new System.Drawing.Point(73, 222);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(94, 36);
+            this.buttonAdd.TabIndex = 14;
+            this.buttonAdd.Text = "Add";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // textBoxY
+            // 
+            this.textBoxY.Location = new System.Drawing.Point(159, 177);
+            this.textBoxY.Name = "textBoxY";
+            this.textBoxY.Size = new System.Drawing.Size(52, 26);
+            this.textBoxY.TabIndex = 13;
+            this.textBoxY.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxX_KeyPress);
+            // 
+            // textBoxX
+            // 
+            this.textBoxX.Location = new System.Drawing.Point(41, 177);
+            this.textBoxX.Name = "textBoxX";
+            this.textBoxX.Size = new System.Drawing.Size(52, 26);
+            this.textBoxX.TabIndex = 12;
+            this.textBoxX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxX_KeyPress);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(126, 180);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(24, 20);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Y:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 180);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 20);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "X:";
+            // 
+            // labelType
+            // 
+            this.labelType.AutoSize = true;
+            this.labelType.Location = new System.Drawing.Point(11, 462);
+            this.labelType.Name = "labelType";
+            this.labelType.Size = new System.Drawing.Size(30, 20);
+            this.labelType.TabIndex = 9;
+            this.labelType.Text = "typ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 430);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Type:";
+            // 
             // labelSquare
             // 
             this.labelSquare.AutoSize = true;
-            this.labelSquare.Location = new System.Drawing.Point(21, 277);
+            this.labelSquare.Location = new System.Drawing.Point(11, 373);
             this.labelSquare.Name = "labelSquare";
             this.labelSquare.Size = new System.Drawing.Size(35, 20);
             this.labelSquare.TabIndex = 7;
@@ -118,7 +193,7 @@ namespace project
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 257);
+            this.label3.Location = new System.Drawing.Point(3, 353);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 20);
             this.label3.TabIndex = 6;
@@ -127,7 +202,7 @@ namespace project
             // labelPerimetr
             // 
             this.labelPerimetr.AutoSize = true;
-            this.labelPerimetr.Location = new System.Drawing.Point(17, 208);
+            this.labelPerimetr.Location = new System.Drawing.Point(7, 304);
             this.labelPerimetr.Name = "labelPerimetr";
             this.labelPerimetr.Size = new System.Drawing.Size(32, 20);
             this.labelPerimetr.TabIndex = 5;
@@ -136,7 +211,7 @@ namespace project
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 184);
+            this.label2.Location = new System.Drawing.Point(3, 280);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 20);
             this.label2.TabIndex = 4;
@@ -144,7 +219,7 @@ namespace project
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(40, 493);
+            this.clearButton.Location = new System.Drawing.Point(50, 568);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(134, 54);
             this.clearButton.TabIndex = 3;
@@ -159,32 +234,24 @@ namespace project
             this.listBox1.ItemHeight = 20;
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(206, 164);
+            this.listBox1.Size = new System.Drawing.Size(223, 164);
             this.listBox1.TabIndex = 0;
             // 
-            // label1
+            // buttonSave
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 334);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 20);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Type:";
-            // 
-            // labelType
-            // 
-            this.labelType.AutoSize = true;
-            this.labelType.Location = new System.Drawing.Point(21, 366);
-            this.labelType.Name = "labelType";
-            this.labelType.Size = new System.Drawing.Size(30, 20);
-            this.labelType.TabIndex = 9;
-            this.labelType.Text = "typ";
+            this.buttonSave.Location = new System.Drawing.Point(73, 509);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(89, 41);
+            this.buttonSave.TabIndex = 15;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1062, 582);
+            this.ClientSize = new System.Drawing.Size(1139, 671);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "Form1";
@@ -218,6 +285,13 @@ namespace project
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelType;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.TextBox textBoxY;
+        private System.Windows.Forms.TextBox textBoxX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

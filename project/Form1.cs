@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace project
 {
@@ -15,8 +16,10 @@ namespace project
     {
         Graphics g;
         Bitmap bmp = new Bitmap(100,100);
+        
         Pen p;
         Pen gr;
+        
         Point cursor;
         int k = 0;
         
@@ -32,7 +35,9 @@ namespace project
             //g = Graphics.FromImage(bmp);
             SetSize();
             p = new Pen(Color.Black, 3);
+            p.StartCap = p.EndCap = System.Drawing.Drawing2D.LineCap.Round;
             gr = new Pen(Color.Gray, 0.5F);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             numOfCells = pictureBox1.Width;
             
 
@@ -71,6 +76,7 @@ namespace project
                 {
                     drawPoligon(points);
                     pictureBox1.Enabled = false;
+                    buttonAdd.Enabled = false;
                     clearButton.BackColor = Color.Green;
                 }
                 else
@@ -84,19 +90,22 @@ namespace project
                     
                 }
                 
-                
-                
-                
+              
             }
             
             
-
         }
         public bool threePointInOneLine(Point[] points)
         {
             int a = points[0].X * (points[1].Y - points[2].Y) + points[1].X * (points[2].Y - points[0].Y) + 
                 points[2].X * (points[0].Y - points[1].Y);
-            if (a == 0)
+            int b = points[1].X * (points[2].Y - points[3].Y) + points[2].X * (points[3].Y - points[1].Y) +
+                points[3].X * (points[1].Y - points[2].Y);
+            int c = points[0].X * (points[1].Y - points[3].Y) + points[1].X * (points[3].Y - points[0].Y) +
+                points[3].X * (points[0].Y - points[1].Y);
+            int g = points[0].X * (points[2].Y - points[3].Y) + points[2].X * (points[3].Y - points[0].Y) +
+                points[3].X * (points[0].Y - points[2].Y);
+            if (a == 0 || b==0 || c ==0|| g==0)
             {
                 return true;
             }
@@ -106,7 +115,7 @@ namespace project
             }
 
         }
-        public int area(Point a,Point b,Point c)
+        public double area(Point a,Point b,Point c)
         {
             return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
         }
@@ -160,10 +169,14 @@ namespace project
             Console.WriteLine(intersect_check(points[0], points[3], points[1], points[2]));
             
             checkAndSwap(points);
+            
+
             perimetrfunc(points);
             square(points);
             findType(points);
             g.DrawPolygon(p, points);
+
+
             pictureBox1.Image = bmp;
             //Dispose();
             Array.Clear(points, 0, 4);
@@ -274,7 +287,9 @@ namespace project
         }
         public void drawGrid(int numOfsels,int cellSize)
         {
-            
+            Rectangle rectangle = Screen.PrimaryScreen.Bounds;
+            SolidBrush whiteBrush = new SolidBrush(Color.White);
+            g.FillRectangle(whiteBrush, rectangle);
             for (int y = 0; y < numOfCells; ++y)
             {
                 g.DrawLine(gr, 0, y * cellSize, numOfCells * cellSize, y * cellSize);
@@ -313,7 +328,92 @@ namespace project
             labelSquare.Text = "";
             labelType.Text = "";
             pictureBox1.Enabled = true;
+            buttonAdd.Enabled = true;
             clearButton.BackColor = SystemColors.Control;
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            g = Graphics.FromImage(bmp);
+            if (Convert.ToInt32(textBoxX.Text) > 0 && Convert.ToInt32(textBoxX.Text) < pictureBox1.Width &&
+               Convert.ToInt32(textBoxY.Text) > 0 && Convert.ToInt32(textBoxY.Text) < pictureBox1.Height)
+            {
+                
+
+                g.DrawEllipse(p, Convert.ToInt32(textBoxX.Text) - 5, Convert.ToInt32(textBoxY.Text) - 5, 5, 5);
+                points[k++] = new Point(Convert.ToInt32(textBoxX.Text), Convert.ToInt32(textBoxY.Text));
+                pictureBox1.Image = bmp;
+                listBox1.Items.Add("X:" + Convert.ToInt32(textBoxX.Text) + " Y:" + Convert.ToInt32(textBoxY.Text));
+                textBoxX.Text = "";
+                textBoxY.Text = "";
+                if (k == 4)
+                {
+                    if (!threePointInOneLine(points))
+                    {
+                        drawPoligon(points);
+                        pictureBox1.Enabled = false;
+                        buttonAdd.Enabled = false;
+                        clearButton.BackColor = Color.Green;
+                    }
+                    else
+                    {
+                        Array.Clear(points, 0, 4);
+                        k = 0;
+                        MessageBox.Show("Three or more points lie on one line,\nTry again.", "Error!",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error);
+                        FormClean();
+
+                    }
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid point,\nTry again.", "Error!",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void textBoxX_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar) )
+                return;
+            if (Char.IsControl(e.KeyChar))
+            {
+                if (e.KeyChar == (char)Keys.Enter)
+                {
+                    if (sender.Equals(textBoxX))
+                        textBoxY.Focus();
+                    else
+                        buttonAdd.Select();
+                }
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Images|*.png;*.bmp;*.jpg";
+            ImageFormat format = ImageFormat.Png;
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string ext = System.IO.Path.GetExtension(sfd.FileName);
+                switch (ext)
+                {
+                    case ".jpg":
+                        format = ImageFormat.Jpeg;
+                        break;
+                    case ".bmp":
+                        format = ImageFormat.Bmp;
+                        break;
+                }
+                pictureBox1.Image.Save(sfd.FileName, format);
+            }
         }
     }
 }
